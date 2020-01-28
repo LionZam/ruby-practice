@@ -13,23 +13,26 @@ class FindingAction
 end
 
 describe FindingAction do
+  subject(:finding_action) { build_stubbed :finding_action }
+
   describe "#notify_creator" do
-    subject { described_class.new(creator: user) }
-    before { allow(FindingActionNotifier).to receive(:send_creator_notification?).and_return(notification) }
+    before { allow(FindingActionNotifier).to receive(:send_creator_notification) }
 
     context "when updater and creater are same users" do
-      it "not sends comment notification" do
-        subject.notify_creator(user).to be_nil
+      before { finding_action.notify_creator(finding_action.creator) }
 
-        expect(FindingActionNotifier).to have_not_received(:send_creator_notification).with(subject)
+      it "not sends comment notification" do
+        expect(FindingActionNotifier).to have_not_received(:send_creator_notification).with(finding_action)
       end
     end
 
     context "when updater and creater are different users" do
-      it "sends comment notification" do
-        subject.notify_creator(user).to be_notification_representaion(notification)
+      let(:another_user) { build_stubbed :user }
 
-        expect(FindingActionNotifier).to have_received(:send_creator_notification).with(subject)
+      before { finding_action.notify_creator(another_user) }
+
+      it "sends comment notification" do
+        expect(FindingActionNotifier).to have_received(:send_creator_notification).with(finding_action)
       end
     end
   end

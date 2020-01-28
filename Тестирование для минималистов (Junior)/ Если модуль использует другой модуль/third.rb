@@ -9,7 +9,7 @@ class TodoAssigneeNotifier
 end
 
 describe TodoAssigneeNotifier do
-  let(:todo) { create :todo }
+  let(:todo) { build_stubbed :todo }
 
   describe ".notify" do
     context "when todo executor allows_notifying_membership" do

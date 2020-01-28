@@ -8,29 +8,20 @@ class CarwashLocator
   end
 end
 
-describe BatchSectionClone do
-  let(:carwashes) { [create(:carwash, coordinates: [CarwashLocator::MAX_DISTANCE + 1, 0])] }
-  let(:my_coordinates) { [0, 0] }
+describe CarwashLocator do
+  subject(:carwash_locator) { described_class.new }
 
   describe ".nearest" do
-    subject { described_class.nearest }
+    before do
+      carwash_further_than_max_distance = double("Carwash", distance_to: CarwashLocator::MAX_DISTANCE + 1)
+      carwash_closer_than_max_distance = double("Carwash", distance_to: CarwashLocator::MAX_DISTANCE - 1)
+      carwashes = [carwash_closer_than_max_distance, carwash_further_than_max_distance]
 
-    context "when nearest carwash is exist" do
-      before do
-        carwashes << create(:carwash, coordinates: [CarwashLocator::MAX_DISTANCE - 1, 0] )
-        allow(Carwash).to receive(:with_coordinates).and_return(carwashes)        
-      end
-
-      it { is_expected.to have(1).item }
-      it { expect(subject.first).to eq(carwashes.first) }
+      allow(Carwash).to receive(:with_coordinates).and_return(carwashes)        
     end
 
-    context "when nearest carwash is exist" do
-      before do
-        allow(Carwash).to receive(:with_coordinates).and_return(carwashes)        
-      end
-
-      it { is_expected.to have(0).items }
+    it "not returns carwashes further than max distance" do
+      expect(carwash_locator.nearest).to eq([carwash_closer_than_max_distance])
     end
   end
 end
