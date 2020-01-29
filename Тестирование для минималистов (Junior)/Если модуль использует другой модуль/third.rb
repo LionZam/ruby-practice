@@ -14,7 +14,7 @@ describe TodoAssigneeNotifier do
   describe ".notify" do
     context "when todo executor allows_notifying_membership" do
       before do
-        allow(NotificationManager).to receive(:allows_notifying_membership).and_return(true) 
+        allow(NotificationManager).to receive(:allows_notifying_membership).and_return(true)
         allow(TodoMailer).to receive(:todo_notification).with(todo)
         allow(PushNotification).to receive(:deliver).with("todo_assign", todo.executor, todo)
       end
@@ -25,7 +25,7 @@ describe TodoAssigneeNotifier do
 
     context "when todo executor not allows_notifying_membership" do
       before do
-        allow(NotificationManager).to receive(:allows_notifying_membership).and_return(false)        
+        allow(NotificationManager).to receive(:allows_notifying_membership).and_return(false)
         allow(PushNotification).to receive(:deliver).with("todo_assign", todo.executor, todo)
       end
 

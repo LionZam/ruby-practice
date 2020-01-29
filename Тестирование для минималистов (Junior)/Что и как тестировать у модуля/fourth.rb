@@ -19,10 +19,10 @@ end
 describe Book do
   describe "#file_url" do
     context "filename size has only one symbol" do
-      let(:book) { described_class.new(filename: "a") }
+      subject(:book) { described_class.new(filename: "a") }
 
       it "has file_url" do
-        expect { book.file_url }.to eq "/system/a/a"
+        expect(book.file_url).to eq "/system/a/a"
       end
     end
   end
@@ -30,12 +30,20 @@ describe Book do
   describe "#delete_file" do
     let(:book) { described_class.new(filename: "abc") }
 
-    it "will delete filename and change file_destroyed_at" do
-      expect { book.delete_file }.to change { book.filename }.to(nil)
+    before do
+      time_now = Time.now
       
-      expect { book.delete_file }.to change do
-        book.file_destroyed_at.strftime("%m/%d/%Y %H:%M")
-      end.to(Time.now.strftime("%m/%d/%Y %H:%M"))
+      book.delete_file 
+      allow(Time).to receive(:now).and_return(time_now)
+    end
+
+    it "deletes filename" do
+      expect(book.filename).to be_nil
+    end
+
+    it "sets file destroyed at now" do
+      expect(Time).to have_received(:now)
+      expect(book.file_destroyed_at).to eq(time_now)
     end
   end
 end

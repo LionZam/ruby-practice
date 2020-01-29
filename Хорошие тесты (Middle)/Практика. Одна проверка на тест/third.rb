@@ -1,7 +1,7 @@
 describe ProjectType do
   describe "serialized fields" do
     let(:project_type) { build(:project_type) }
-    let(:empty_arrays) { 
+    let(:empty_arrays) {
       {
         project_types: [],
         severity_values: [],
@@ -12,7 +12,7 @@ describe ProjectType do
       project_type.project_types = nil
       project_type.severity_values = nil
       project_type.scopes = nil
-      
+
       project_type.save
       project_type.reload
     end

@@ -8,9 +8,9 @@ describe TimeEntry do
         time: 9.99,
         client_delay: false,
         description: "description"
-      } 
+      }
     }
-    subject do 
+    subject do
       TimeEntry.create!(valid_attributes) do |te|
         te.user = user
         te.creator = user

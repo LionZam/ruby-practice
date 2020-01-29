@@ -1,17 +1,16 @@
 describe Account do
-	describe ".add_membership" do
+  describe ".add_membership" do
     it "adds membership" do
-	  end
-	end  
-end
- 
-	describe "#template_account?" do
-		context "when account is a template" do
-	    it "returns true"
-		end
+    end
+  end
+
+  describe "#template_account?" do
+    context "when account is a template" do
+      it "returns true"
+    end
 
     context "when account is not a template" do
-	    it "returns false"
-		end
+      it "returns false"
+    end
   end
 end

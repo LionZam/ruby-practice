@@ -44,8 +44,8 @@ describe ReviewerMailer do
     end
 
     context "when locale isn't present" do
-      before do 
-        #mock 
+      before do
+        #mock
       end
 
       it "sends subject on english" do

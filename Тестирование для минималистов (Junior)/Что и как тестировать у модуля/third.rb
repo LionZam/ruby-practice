@@ -1,4 +1,4 @@
-describe User do
+  describe User do
   describe "#date_format" do
     let(:user) { described_class.new }
 
