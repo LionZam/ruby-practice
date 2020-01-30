@@ -14,12 +14,10 @@ describe Attachment do
 
   describe "#editable?" do
     ms_offce_types.each do |ms_offce_type|
-     context "when attachment_content_type is #{ms_offce_type}" do
-      let(:attachment) { create: attachment, attachment_content_type: ms_offce_type }
+      context "when attachment_content_type is #{ms_offce_type}" do
+        subject(:attachment) { create: attachment, attachment_content_type: ms_offce_type }
 
-      public_send("it", "returns true") do
-        expect(attachment.editable?).to be true
+        it { is_expected.to be_editable }
       end
-    end
   end
 end

@@ -1,16 +1,16 @@
 describe Project do
   describe "#as_json" do
-    subject { build(:project).as_json }
+    subject(:as_json) { build(:project).as_json }
 
     it "has required keys" do
       is_expected.to be_a_project_json_representation
     end
   end
 
-  describe "defaults" do
+  describe "by default" do
     subject { build(:project) }
 
-    it "should be pre-populated" do
+    it "will be pre-populated" do
       is_expected.to be_a_project_representation
     end
   end

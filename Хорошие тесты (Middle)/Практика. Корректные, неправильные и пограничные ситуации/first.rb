@@ -23,7 +23,7 @@ class TodoPresenter
 end
 
 describe TodoPresenter do
-  let(:todo_presenter) { create :todo_presenter, tags: tags, title: "title" }
+  subject(:todo_presenter) { described_class.new(tags: tags, title: "title") }
 
   describe "#display_text" do
     subject { todo_presenter.display_text }
@@ -31,26 +31,26 @@ describe TodoPresenter do
     context "when tags count is zero" do
       let(:tags) { [] }
 
-      it { is_expected }.to eq(todo_presenter.title)
+      it { is_expected.to eq(todo_presenter.title) }
     end
 
     context "when tags count is more than zero" do
       context "when tags count is less than max tags allowed" do
         let(:tags) { ["a", "b"]  }
 
-        it { is_expected }.to eq("title a, b")
+        it { is_expected.to eq("title a, b") }
       end
 
       context "when tags count more than max tags allowed" do
         let(:tags) { %w[a b c d e] }
 
-        it { is_expected }.to eq("title a, b, c, d and more...")
+        it { is_expected.to eq("title a, b, c, d and more...") }
       end
 
       context "when tags count is max tags allowed" do
         let(:tags) { %w[a b c d] }
 
-        it { is_expected }.to eq("title a, b, c, d")
+        it { is_expected.to eq("title a, b, c, d") }
       end
     end
   end

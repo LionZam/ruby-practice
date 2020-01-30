@@ -1,13 +1,14 @@
 describe TodoPresenter do
   describe "#as_json" do
+    subject(:as_json) { todo.as_json }
+
     context "when todo's target is a Post" do
-      let(:project) { create(:project) }
-      let(:post) { create(:post, project: project) }
-      let(:todo) { create(:todo, :target => post) }
-      subject { todo.as_json }
+      let(:project) { build_stubbed(:project) }
+      let(:post) { build_stubbed(:post, project: project) }
+      let(:todo) { build_stubbed(:todo, :target => post) }
  
       it "includes reference number" do
-        subject["reference_number"]).to eq post.reference_number
+        expect(as_json["reference_number"]).to eq(post.reference_number)
       end
     end
   end

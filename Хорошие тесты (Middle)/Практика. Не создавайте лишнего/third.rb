@@ -25,7 +25,7 @@ describe Api::V1::ExceptionsController do
     end
 
     context "when user is a user" do
-      let(:role) { "admin" }
+      let(:role) { "user" }
 
       it "returns available for user exceptions" do
         expect(index.size).to eq(1)

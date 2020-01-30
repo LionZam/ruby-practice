@@ -1,5 +1,7 @@
 describe TimeEntry do
   describe ".create!" do
+    subject(:time_entry) { create_time_entry }
+
     let(:user) { create(:user) }
     let(:objective) { create(:objective) }
     let(:valid_attributes) {
@@ -10,7 +12,8 @@ describe TimeEntry do
         description: "description"
       }
     }
-    subject do
+
+    def create_time_entry
       TimeEntry.create!(valid_attributes) do |te|
         te.user = user
         te.creator = user
@@ -18,8 +21,6 @@ describe TimeEntry do
       end
     end
 
-    it "creates valid todo" do
-      is_expected.to be_valid
-    end
+    it { is_expected.to be_valid }
   end
 end

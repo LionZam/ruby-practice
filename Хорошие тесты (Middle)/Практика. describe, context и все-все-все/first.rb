@@ -1,17 +1,23 @@
 describe Account do
+  subject(:account) { build_stubbed :account }
+
   describe "#api_accessible" do
-    subject { described_class.new }
+    subject(:api_accessible) { account.api_accessible }
 
     context "with enabled api access" do
-      account.update_attribute(:api_accessible, true)
+      before do
+        account.update_attribute(:api_accessible, true)
+      end
 
-      it { is_expected.api_accessible.should be_true }
+      it { is_expected.to be_truthy }
     end
 
     context "with disabled api access" do
-      account.update_attribute(:api_accessible, false)
+      before do
+        account.update_attribute(:api_accessible, false)
+      end
 
-      it { is_expected.api_accessible.should be_false }
+      it { is_expected.to be_falsey }
     end
   end
 end

@@ -18,8 +18,10 @@ describe Attachment do
   describe "#errors" do
     subject(:errors) { attachment.errors }
 
+    before { allow(attachment).to recieve(:attachment_size).and_return(attachment_size)
+
     context "when file size is more than max attachment size" do
-      before { allow(attachment).to recieve(attachment_size).and_return(Attachment::MAX_ATTACHMENT_SIZE + 1.megabyte) }
+      let(:attachment_size) { Attachment::MAX_ATTACHMENT_SIZE + 1.megabyte }
 
       it "contains validation error" do
         expect(subject.first).to eq("Attachment size is limited to 1GB per attachment")
@@ -27,15 +29,15 @@ describe Attachment do
     end
 
     context "when file size is less than max attachment size" do
-      before { allow(attachment).to recieve(attachment_size).and_return(Attachment::MAX_ATTACHMENT_SIZE - 1.megabyte) }
+      let(:attachment_size) { Attachment::MAX_ATTACHMENT_SIZE - 1.megabyte }
 
-      it { errors }.to be_empty
+      it { is_expected }.to be_empty
     end
 
     context "when file size is eqaul max attachment size" do
-      before { allow(attachment).to recieve(attachment_size).and_return(Attachment::MAX_ATTACHMENT_SIZE) }
+      let(:attachment_size) { Attachment::MAX_ATTACHMENT_SIZE }
 
-      it { errors }.to be_empty
+      it { is_expected }.to be_empty
     end
   end
 end

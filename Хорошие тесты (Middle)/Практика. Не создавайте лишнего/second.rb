@@ -20,31 +20,28 @@ class EventPresenter
 end
 
 describe EventPresenter do
-  subject(:date_presentation) { described_class.new(event).date }
+  subject(:date_presentation) { .date }
+
+  def create_event(date)
+    event = instance_double(Event, date: date)
+    described_class.new(event)
+  end
 
   describe "#date" do
     context "when event date is today" do
-      let(:event) { instance_double(Event, date: Date.today }
-
-      it { date_presentation }.to eq("Today")
+      it { expect(create_event(Date.today).date).to eq("Today") }
     end
 
-    context "when event date is yesterday" do
-      let(:event) { instance_double(Event, date: Date.yesterday }
-        
-      it { date_presentation }.to eq("Yesterday")
+    context "when event date is yesterday" do        
+      it { expect(create_event(Date.yesterday).date).to eq("Yesterday") }
     end
 
-    context "when event date in midnight" do
-      let(:event) { instance_double(Event, date: Date.midnight }
-        
-      it { date_presentation }.to eq("Today")
+    context "when event date in midnight" do        
+      it { expect(create_event(Date.midnight).date).to eq("Today") }
     end
 
-    context "when event date is tomorrow" do
-      let(:event) { instance_double(Event, date: Date.today.next_day }
-        
-      it { date_presentation }.to Date.today.next_day.to_s
+    context "when event date is tomorrow" do        
+      it { expect(create_event(Date.new("12/12/2019")).date).to eq("12/12/2019") }
     end
   end
 end

@@ -1,10 +1,10 @@
 describe AccountActivityMailer do
-  context ".report" do
-    let(:account_activity_mailer) { AccountActivityMailer.report }
+  subject(:account_activity_mailer) { AccountActivityMailer.report }
 
+  context ".report" do
     it "delivers report in attachment" do
-      account_activity_mailer.attachments.should have(1).item
-      account_activity_mailer.attachments.first.filename.should eq "filename.xls"
+      expect(account_activity_mailer.attachments).to have(1).item
+      expect(account_activity_mailer.attachments.first.filename).to eq("filename.xls")
     end
   end
 end
