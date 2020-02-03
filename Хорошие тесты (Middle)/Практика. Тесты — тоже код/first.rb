@@ -24,7 +24,7 @@ describe Attachment do
       let(:attachment_size) { Attachment::MAX_ATTACHMENT_SIZE + 1.megabyte }
 
       it "contains validation error" do
-        expect(subject.first).to eq("Attachment size is limited to 1GB per attachment")
+        expect(errors.first).to eq("Attachment size is limited to 1GB per attachment")
       end
     end
 

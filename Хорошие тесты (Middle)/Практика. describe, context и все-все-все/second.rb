@@ -12,20 +12,20 @@ describe Attachment do
       it { is_expected.not_to be_published }
     end
   end
-  
-  describe "#published?" do
+
+  describe "#editable?" do
     subject(:attachment) { create(:attachment, attachment_file_name: attachment_file_name) }
-    
+
     context "when word document is attached" do
       let(:attachment_file_name) { "word.docx" }
 
-      it { is_expected.to be_published }
+      it { is_expected.to be_editable }
     end
 
     context "when pdf is attached" do
       let(:attachment_file_name) { "NotOffice.pdf" }
 
-      it { is_expected.not_to be_published }
+      it { is_expected.not_to be_editable }
     end
   end
 end

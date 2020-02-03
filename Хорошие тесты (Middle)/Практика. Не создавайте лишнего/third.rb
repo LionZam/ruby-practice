@@ -5,7 +5,7 @@ describe Api::V1::ExceptionsController do
   let(:user_exception) { build: exception, user: :user }
 
   before do
-    allow(subject).to receive("load_project").and_return(project)
+    allow(exceptions_controller).to receive("load_project").and_return(project)
     project.exceptions.push(user_exception)
   end
 

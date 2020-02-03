@@ -8,7 +8,7 @@ describe Project do
   end
 
   describe "by default" do
-    subject { build(:project) }
+    subject(:project) { build(:project) }
 
     it "will be pre-populated" do
       is_expected.to be_a_project_representation
