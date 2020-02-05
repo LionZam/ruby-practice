@@ -1,5 +1,5 @@
 describe CommentsController do
-  describe ".create" do
+  describe "POST create" do
     context "with valid params given" do
       before { post :create, valid_params }
 

@@ -9,9 +9,7 @@ describe Api::V1::ExceptionsController do
     project.exceptions.push(user_exception)
   end
 
-  describe "#index" do
-    subject(:index) { exceptions_controller.index }
-
+  describe "GET #index" do
     before do
       allow(ApplicationController).to receive("current_user").and_return(user)
     end
@@ -20,6 +18,8 @@ describe Api::V1::ExceptionsController do
       let(:role) { "admin" }
 
       it "returns all exceptions" do
+        get :index
+
         expect(index.size).to eq(project.exceptions.size)
       end
     end
@@ -28,6 +28,8 @@ describe Api::V1::ExceptionsController do
       let(:role) { "user" }
 
       it "returns available for user exceptions" do
+        get :index
+
         expect(index.size).to eq(1)
       end
     end
