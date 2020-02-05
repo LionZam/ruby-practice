@@ -1,0 +1,36 @@
+require "spec_helper"
+ 
+feature "Audit To-Do List" do
+  let(:relationship) { create(:relationship) }
+  let(:user) { relationship.user }
+  let(:account) { relationship.account }
+  let(:audit) { create(:audit, account: account) }
+  let!(:project_role) { create(:project_role, audit: audit, role: ProjectRole::MANAGER, relationship: relationship) }
+ 
+  background do
+    subdomain account.sub_domain
+    login_as user
+  end
+ 
+  let!(:todo) { create(:todo, target: audit) }
+  let!(:another_todo) { create(:todo, target: audit) }
+ 
+  scenario "Correctly display to-dos after update-delete from modal", js: true do
+    visit audit_todos_path(audit)
+ 
+    within("#todo_#{todo.id}") do
+      page.find(".edit.modal-link").click
+    end
+ 
+    page.find("#modal-box .edit_todo input[type=submit]").click
+    wait_for_ajax
+ 
+    page.find(".caution-zone .btn.warning").click
+    page.find(".confirmation-zone .btn.primary").click
+    wait_for_ajax
+ 
+    page.should_not have_css("#modal-box .edit_todo", visible: true)
+    page.should_not have_content("No to-dos have been added in this project yet")
+    page.should have_content(another_todo.description)
+  end
+end
